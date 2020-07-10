@@ -6,11 +6,32 @@ and `isSatelliteProvider`.
 
 It's intentionally designed as a typical `*nix` cli tool, reading from `stdin` and writing to `stdout`. 
 
+## Installing
+
+Installing currently requires [Go](https://golang.org/) to be installed
+
+```sh
+go get github.com/sbogacz/geoip
+```
+
 ## Example
 
 ```sh
-echo "8.8.8.8" | ./geoip                                                                                        
+echo "8.8.8.8" | geoip                                                                                        
 8.8.8.8,,United States,false,false
+```
+
+By default it expects the first column to contain the IP address, but that behavior is configurable with the `-i` flag.
+
+```sh
+echo "default,dnsserver,8.8.8.8" | geoip -i 2
+default,dnsserver,8.8.8.8,,United States,false,false
+```
+
+If the address is quoted in some way, the quoting character can be specified with `-c`
+```sh
+echo 'default,dnsserver,"8.8.8.8"' | geoip -i 2 -c '"' 
+default,dnsserver,"8.8.8.8",,United States,false,false
 ```
 
 ## Getting the GeoIP2 Database on Mac OS 
